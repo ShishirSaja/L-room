@@ -24,12 +24,14 @@ const Flashcards = ({ topicId }) => {
     }, [topicId]);
 
     const handleFlip = () => setIsFlipped(!isFlipped);
+
     const handleNext = () => {
         if (currentIndex < flashcards.length - 1) {
             setCurrentIndex(currentIndex + 1);
             setIsFlipped(false);
         }
     };
+
     const handlePrev = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
@@ -43,14 +45,21 @@ const Flashcards = ({ topicId }) => {
     const currentCard = flashcards[currentIndex];
 
     return (
-        <div style={{marginTop: '20px', padding: '20px', border: '1px solid blue'}}>
-            <h4>Flashcards</h4>
-            <div onClick={handleFlip} style={{border: '1px solid black', padding: '20px', minHeight: '100px', cursor: 'pointer'}}>
+        <div className="flashcards-panel">
+            <div className="flashcard" onClick={handleFlip}>
                 {isFlipped ? currentCard.answer : currentCard.question}
             </div>
-            <p>Card {currentIndex + 1} of {flashcards.length}</p>
-            <button onClick={handlePrev} disabled={currentIndex === 0}>Prev</button>
-            <button onClick={handleNext} disabled={currentIndex === flashcards.length - 1}>Next</button>
+            <p style={{ margin: '16px 0 12px', color: 'var(--text-muted)' }}>
+                Card {currentIndex + 1} of {flashcards.length} • tap to flip
+            </p>
+            <div className="segment-buttons">
+                <button className="segment-button" onClick={handlePrev} disabled={currentIndex === 0}>
+                    Previous
+                </button>
+                <button className="segment-button" onClick={handleNext} disabled={currentIndex === flashcards.length - 1}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 };

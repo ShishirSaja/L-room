@@ -8,11 +8,13 @@ const Chatbot = ({ documentId }) => {
 
     const handleAsk = async (e) => {
         e.preventDefault();
+        if (!question.trim()) return;
         setLoading(true);
         setAnswer('');
         try {
             const response = await api.post('/chatbot/ask', { documentId, question });
             setAnswer(response.data.answer);
+            setQuestion('');
         } catch (error) {
             setAnswer("Sorry, I couldn't get an answer. Please try again.");
             console.error("Error asking chatbot", error);
@@ -21,22 +23,26 @@ const Chatbot = ({ documentId }) => {
     };
 
     return (
-        <div style={{marginTop: '20px', padding: '20px', border: '1px solid orange'}}>
-            <h4>Document Chatbot</h4>
-            <form onSubmit={handleAsk}>
+        <div className="chatbot-panel">
+            <div>
+                <h4 style={{ margin: '0 0 4px' }}>Document Chatbot</h4>
+                <small>Ask any question about this upload.</small>
+            </div>
+            <form className="chatbot-form" onSubmit={handleAsk}>
                 <input
+                    className="input-control"
                     type="text"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="Ask a question about this document"
+                    placeholder="Ask about key concepts, summaries, or definitions"
                 />
-                <button type="submit" disabled={loading}>
+                <button className="btn btn-primary" type="submit" disabled={loading}>
                     {loading ? 'Asking...' : 'Ask'}
                 </button>
             </form>
             {answer && (
-                <div>
-                    <p><strong>Answer:</strong> {answer}</p>
+                <div className="chatbot-answer">
+                    <strong>Answer:</strong> {answer}
                 </div>
             )}
         </div>

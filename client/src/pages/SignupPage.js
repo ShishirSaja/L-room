@@ -22,26 +22,76 @@ const SignupPage = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSignup}>
-                <h2>Sign Up</h2>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-                <div>
-                    <label>
-                        Role:
-                        <select value={role} onChange={(e) => setRole(e.target.value)}>
-                            <option value="student">Student</option>
-                            <option value="lecturer">Lecturer</option>
-                        </select>
-                    </label>
+        <div className="auth-wrapper">
+            <div className="auth-card">
+                <div className="auth-card-inner">
+                    <form onSubmit={handleSignup}>
+                        <h2>Create an account</h2>
+                        <p>Join Learning Room as a student or lecturer.</p>
+                        {error && <p className="error-text">{error}</p>}
+
+                        <div className="form-field">
+                            <label htmlFor="signup-username">Username</label>
+                            <input
+                                id="signup-username"
+                                className="input-control"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Pick a display name"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="signup-email">Email</label>
+                            <input
+                                id="signup-email"
+                                className="input-control"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@example.com"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="signup-password">Password</label>
+                            <input
+                                id="signup-password"
+                                className="input-control"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Create a secure password"
+                                required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="signup-role">Role</label>
+                            <select
+                                id="signup-role"
+                                className="input-control"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                            >
+                                <option value="student">Student</option>
+                                <option value="lecturer">Lecturer</option>
+                            </select>
+                        </div>
+
+                        <button className="btn btn-primary" type="submit">
+                            Create account
+                        </button>
+                    </form>
+                    <div className="auth-links">
+                        <p>
+                            Already have an account? <Link to="/login">Log in</Link>
+                        </p>
+                    </div>
                 </div>
-                <button type="submit">Sign Up</button>
-            </form>
-            <div className="auth-links">
-                <p>Already have an account? <Link to="/login">Login</Link></p>
             </div>
         </div>
     );

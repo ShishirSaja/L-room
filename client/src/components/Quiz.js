@@ -44,34 +44,47 @@ const Quiz = ({ topicId }) => {
     if (!quiz.length) return <p>No quiz available for this topic.</p>;
 
     return (
-        <div style={{marginTop: '20px', padding: '20px', border: '1px solid green'}}>
-            <h4>Quiz</h4>
+        <div className="quiz-panel">
+            <h4 style={{ marginTop: 0 }}>Quiz</h4>
             {score !== null ? (
-                <div>
-                    <h5>Your Score: {score} / {quiz.length}</h5>
+                <div className="quiz-score">
+                    <p>Great work!</p>
+                    <h2>{score} / {quiz.length}</h2>
+                    <button className="btn btn-secondary" onClick={() => setScore(null)}>
+                        Retake quiz
+                    </button>
                 </div>
             ) : (
-                <div>
-                    {quiz.map((q, qIndex) => (
-                        <div key={qIndex}>
-                            <p>{qIndex + 1}. {q.question}</p>
-                            {Object.keys(q.options).map(optionKey => (
-                                <div key={optionKey}>
-                                    <input
-                                        type="radio"
-                                        id={`q${qIndex}-${optionKey}`}
-                                        name={`question-${qIndex}`}
-                                        value={optionKey}
-                                        onChange={() => handleAnswerChange(qIndex, optionKey)}
-                                        checked={answers[qIndex] === optionKey}
-                                    />
-                                    <label htmlFor={`q${qIndex}-${optionKey}`}>{optionKey}: {q.options[optionKey]}</label>
+                <>
+                    <div className="quiz-list">
+                        {quiz.map((q, qIndex) => (
+                            <div className="quiz-question" key={qIndex}>
+                                <p>
+                                    <strong>{qIndex + 1}.</strong> {q.question}
+                                </p>
+                                <div className="quiz-options">
+                                    {Object.keys(q.options).map((optionKey) => (
+                                        <label key={optionKey} className="quiz-option">
+                                            <input
+                                                type="radio"
+                                                name={`question-${qIndex}`}
+                                                value={optionKey}
+                                                onChange={() => handleAnswerChange(qIndex, optionKey)}
+                                                checked={answers[qIndex] === optionKey}
+                                            />
+                                            <span>
+                                                {optionKey}. {q.options[optionKey]}
+                                            </span>
+                                        </label>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    ))}
-                    <button onClick={handleSubmit}>Submit Quiz</button>
-                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                        Submit quiz
+                    </button>
+                </>
             )}
         </div>
     );
